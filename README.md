@@ -14,7 +14,7 @@ A service account is an account which can talk to the Publishing API. You can cr
 #### An APK or App bundle
 Lastly, you'll need the file which you want to upload. When using the application, you will be prompted to select it. I recommend keeping the JSON key file as well as this file in an easy to find place.
 
-#### Patients
+#### Patience
 Since this application executes multiple API calls and uploads a multi-megabyte file, it takes a while. Wait at least 60 seconds after clicking the Upload button until you go on your `htop` killing spree.
 I will try to improve the interactivity going forward.
 
