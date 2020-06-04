@@ -44,6 +44,5 @@ Things which I will try to implement down the road:
 - Improved error handling/display. The current error display, is, let's just say, suboptimal.
 - Support for multi-language release notes. Currently, only German is supported.
 - More interactivity while waiting for the publishing process to complete.
-- More stability with uploading App bundles. Sometimes the application just times out, and I haven't quite figured out why.
 - A CLI version. Nobody really wants to look at this ugly Swing app.
 - A .NET Core version. Having a .NET Core version should yield a great boost in performance. I only chose Java because Google offers the API in it. Unfortunately, this also means I'll need to do some reverse-engineering and a bit of time to get this one done. 
