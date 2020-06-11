@@ -208,14 +208,22 @@ public class GooglePlayPublisherGui extends JFrame {
 			var commit = edit.commit(packageName, editId).execute();
 			JOptionPane.showMessageDialog(null, String.format("App edit with id %s has been committed!\n", commit.getId()), "Success", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "App could not be uploaded! Transaction was rolled back.", "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "App could not be uploaded! Transaction was rolled back.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	private TrackRelease createTrackRelease(String trackStatus, Integer versionCode) {
-
-		var releaseNotes = Objects.requireNonNullElse(JOptionPane.showInputDialog(this, "Enter release notes:", "Release notes"), "");
+		var area = new JTextArea(5, 10);
+		var pane = new JScrollPane(area);
+		int result = JOptionPane.showOptionDialog(
+				this,
+				new Object[]{"Enter release notes:", pane},
+				"Release notes",
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null, null, null);
+		var releaseNotes = result == JOptionPane.OK_OPTION ? Objects.requireNonNullElse(area.getText(), "") : "";
 		var languageCode = Objects.requireNonNullElse(JOptionPane.showInputDialog(this, "Please specify the language code:", "en-US"), "");
 
 		return new TrackRelease()
@@ -250,7 +258,7 @@ public class GooglePlayPublisherGui extends JFrame {
 	 * @param requestInitializer The source {@link HttpRequestInitializer}
 	 * @return A {@link HttpRequestInitializer} with a 2 minute timout.
 	 */
-	private HttpRequestInitializer addTimeout(final HttpRequestInitializer requestInitializer) {
+	private static HttpRequestInitializer addTimeout(final HttpRequestInitializer requestInitializer) {
 		return httpRequest -> {
 			requestInitializer.initialize(httpRequest);
 			httpRequest.setConnectTimeout(2 * 60000);  // 2 minutes connect timeout
@@ -263,7 +271,7 @@ public class GooglePlayPublisherGui extends JFrame {
 	}
 
 	private enum Tracks {
-		ALPHA("alpha"), BETA("beta"), PRODUCTION("prod");
+		ALPHA("alpha"), BETA("beta"), PRODUCTION("production");
 
 		private final String trackName;
 
